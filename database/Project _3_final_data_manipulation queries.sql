@@ -10,11 +10,11 @@ FROM Customers
 WHERE customerName = 'Olivia Kim';
 
 -- insert in Customers table 
-INSERT INTO Customers (customer_id, customer_name, phone_number)
-VALUES (:customer_id_Input, :customer_name_Input, :phone_number_Input);
+INSERT INTO Customers (customer_name, phone_number)
+VALUES (:customer_name, :phone_number);
 
 INSERT INTO Customers_has_Dietary_Restrictions (customer_id)
-VALUES (:customer_id_Input);
+VALUES (:customer_id);
 
 
 -- update in Customers table

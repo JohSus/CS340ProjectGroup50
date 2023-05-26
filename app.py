@@ -1,4 +1,5 @@
 from flask import Flask, render_template, json, request, redirect
+from flask_mysqldb import MySQL
 import os
 import database.db_connector as db
 
@@ -14,6 +15,8 @@ app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 db_connection = db.connect_to_database()
 
+mysql = MySQL(app)
+
 # Routes 
 
 @app.route('/')
@@ -25,12 +28,54 @@ def customers():
     if request.method == "GET":
 
         query = "SELECT customer_id AS customerID, customer_name AS customerName, phone_number AS phoneNumber FROM Customers;"
-
-        cursor = db.execute_query(db_connection = db_connection, query = query)
-
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
         results = cursor.fetchall()
 
+    if request.method == "POST":
+        if request.form.get("Add_Customer"):
+            customer_name = request.form["customer_name"]
+            phone_number = request.form["phone_number"]
+
+            query = "INSERT INTO Customers (customer_name, phone_number) VALUES (%s, %s);"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query, (customer_name, phone_number))
+            mysql.connection.commit()
+
+            return redirect("/people")
+
     return render_template("customers.j2", Customers = results)
+
+@app.route('/delete-customers/<int:id>')
+def delete_customers(id):
+    query = "DELETE FROM Customers WHERE customer_id = %s;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query, (id,))
+    mysql.connection.commit()
+
+    return redirect("/people")
+
+@app.route('/edit-customers/<int:id>', methods=["POST", "GET"])
+def edit_customers(id):
+    if request.method == "GET":
+        query1 = "SELECT * FROM Customers WHERE customer_id = %s;"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query1)
+        data = cursor.fetchall()
+
+        return render_template("edit_customer.j2", data = data)
+
+    if request.method == "POST":
+        if request.form.get("edit_customer"):
+            customer_name = request.form["customer_name"]
+            phone_number = request.form["phone_number"]
+
+            query = "INSERT INTO Customers (customer_name, phone_number) VALUES (%s, %s);"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query, (customer_name, phone_number))
+            mysql.connection.commit()
+
+    return redirect("/people")
 
 # Listener
 
