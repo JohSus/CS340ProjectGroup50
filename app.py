@@ -1,19 +1,19 @@
 from flask import Flask, render_template, json, request, redirect
 from flask_mysqldb import MySQL
 import os
-import database.db_connector as db
+# import database.db_connector as db
 
 # Configuration
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOS'] = 'classmysql.engr.oregonstate.edu'
+app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
 app.config['MYSQL_USER'] = 'cs340_wubr'
 app.config['MYSQL_PASSWORD'] = '9544' #last 4 of onid
 app.config['MYSQL_DB'] = 'cs340_wubr'
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
-db_connection = db.connect_to_database()
+# db_connection = db.connect_to_database()
 
 mysql = MySQL(app)
 
@@ -58,12 +58,12 @@ def delete_customers(id):
 @app.route('/edit-customers/<int:id>', methods=["POST", "GET"])
 def edit_customers(id):
     if request.method == "GET":
-        query1 = "SELECT * FROM Customers WHERE customer_id = %s;"
+        query1 = "SELECT * FROM Customers WHERE customer_id = %s;" % (id)
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
 
-        return render_template("edit_customer.j2", data = data)
+        return render_template("edit_customers.j2", data = data)
 
     if request.method == "POST":
         if request.form.get("edit_customer"):
