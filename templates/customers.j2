@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>OSU - CS 340 - Introduction to Databases - Flask Demo Project</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <!-- Iterate through each key in the first entry to get the
+        column name -->
+        {% for key in Customers[0].keys() %}
+
+        <!-- Create a <th> tag with the key inside of it, this will be
+        our header row -->
+        <th>{{ key }}</th>
+
+        <!-- End of this for loop -->
+        {% endfor %}
+    </tr>
+    <tbody>
+
+    <!-- Now, iterate through every person in bsg_people -->
+    {% for customer_id in Customers %}
+    <tr>
+        <!-- Then iterate through every key in the current person dictionary -->
+        {% for key in customer_id.keys() %}
+
+        <!-- Create a <td> element with the value of that key in it -->
+        <td>{{customer_id[key]}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>
