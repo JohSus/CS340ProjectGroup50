@@ -31,10 +31,10 @@ def customers():
         query = "SELECT customer_id AS customerID, customer_name AS customerName, phone_number AS phoneNumber FROM Customers;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
-        results = cursor.fetchall()
+        data = cursor.fetchall()
 
         # render edit_customer page passing query data to the edit_customers template
-        return render_template("customers.j2", Customers = results)
+        return render_template("customers.j2", data = data)
 
     if request.method == "POST":
         if request.form.get("add_customer"):
@@ -50,7 +50,7 @@ def customers():
 
 
 
-@app.route('/delete-customers/<int:id>')
+@app.route('/delete_customers/<int:id>')
 def delete_customers(id):
     query = "DELETE FROM Customers WHERE customer_id = %s;"
     cursor = mysql.connection.cursor()
@@ -59,7 +59,7 @@ def delete_customers(id):
 
     return redirect("/customers")
 
-@app.route('/edit-customers/<int:id>', methods=["POST", "GET"])
+@app.route('/edit_customers/<int:id>', methods=["POST", "GET"])
 def edit_customers(id):
     if request.method == "GET":
         query1 = "SELECT * FROM Customers WHERE customer_id = %s;" % (id)

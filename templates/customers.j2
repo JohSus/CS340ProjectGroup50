@@ -62,11 +62,11 @@
         <form action="/customers" method="POST" id="add_customer">
             <legend><strong>Add Customer</strong></legend>
             <fieldset class="fields">
-                <label> Name </label> <input type="text" name="customer_name">
-                <label> Phone Number </label> <input type="text" name="phone_number">
+                <label> Name </label> <input type="text" name="customer_name" required>
+                <label> Phone Number </label> <input type="text" name="phone_number" required>
             </fieldset>
             <input class="btn" type="submit" name="add_customer" value="Add Customer">
-            <input class="btn" type="button" value="Cancel">
+            <input class="btn" type="button" value="Cancel" onClick="browseCustomers()">
         </form>
     </div><!-- add -->
 
@@ -74,11 +74,17 @@
 
     <!-- update -->
     <div id="edit_customers">
-        <form action="/edit_customers/{{customer_id}}" method="POST" id="edit-customer">
+        <form action="/edit_customers/{{data[0].id}}" method="POST" id="edit_customer">
             <legend><strong>Update Customer</strong></legend>
             <fieldset class="fields">
-                <label> Name </label> <input type="text" name="customer_name" value="">
-                <label> Phone Number </label> <input type="text" name="phone_number">
+                <input type="hidden" value="{{data[0].id}}" id="customer_id" name="customer_id" required>
+				<label> ID </label>
+
+				<input type="text" id="customer_name" name="customer_name" placeholder="{{data[0].customer_name}}" required>
+				<label> Name </label>
+
+				<input type="text" id="phone_number" name="phone_number" placeholder="{{data[0].phone_number}}" required>
+				<label> Phone Number </label>
             </fieldset>
             <input class="btn" type="submit" name="edit_customers" value="Save Update Customer">
             <input class="btn" type="button" value="Cancel" onClick="browseCustomers()">
@@ -89,20 +95,20 @@
     <p>&nbsp;</p>
 
     <!-- delete -->
-    <div style="display: block">
-        <form action="/delete-customers/{{customer_id}}" method="POST" id="delete-customers">
+    <div style="display: block" id="delete_customers">
+        <form action="/delete-customers/{{customer_id}}" method="POST" id="delete_customers">
             <legend><strong>Delete Customer</strong></legend>
             <fieldset class="fields">
                 <label for="delete-customer">Delete a customer:</label> 
                     <select name="customers" id="customers"> 
                         {% for customer in Customers %} 
-                        <option value={{customer['customerID']}}>{{customer['customerName']}}</option> 
+                        <option value={{customer['customer_id']}}>{{customer['customer_name']}}</option> 
                         {% endfor %}
                     </select>
 
             </fieldset>
             <input class="btn" type="submit" name="delete_customers" value="Delete Customer">
-            <input class="btn" type="button" value="Cancel">
+            <input class="btn" type="button" value="Cancel" onClick="browseCustomers()">
         </form>
     </div><!-- delete -->
 
