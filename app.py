@@ -29,7 +29,7 @@ def customers():
     # READ
     if request.method == "GET":
 
-        query = "SELECT customer_id AS customerID, customer_name AS customerName, phone_number AS phoneNumber FROM Customers;"
+        query = "SELECT customer_id AS 'ID', customer_name AS 'Customer Name', phone_number AS 'Phone Number' FROM Customers;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
