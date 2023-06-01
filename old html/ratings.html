@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ratings</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newRating() { showform('insert'); }
+    function updateRating(pid) { showform('update'); }
+    function deleteRating(pid) { showform ('delete'); }
+    function browseRatings() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseRatings()">
+<h1>Ratings</h1>
+
+[ <a href="index.html">Home</a> | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="dishes.html">Dishes</a> | 
+<a href="order_has_dishes.html">Order has Dishes</a> | <a href="ratings.html">Ratings</a> | 
+<a href="dietary_restrictions.html">Dietary Restrictions</a> | <a href="customers_has_dietary_restrictions.html">Customer Dietary Restrictions</a> ]
+
+<div id="browse">
+<p><a href="#" onClick="showAll()">Display all forms</a> </p>
+<table border="1" cellpadding="5">
+  <tr>
+    <th><a href="#" onClick="newRating()">New</a></th>
+    <th></th>
+    <th>ID</th>
+    <th>Rating</th>
+    <th>Customer ID</th>
+    <th>Dish ID</th>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateRating('this.ratingID')">Edit</a></td>
+    <td><a href="#" onclick="deleteRating('this.ratingID')">Delete</a></td>
+    <td align="right" >1</td>
+    <td align="right" >5</td>
+    <td align="right" >1</td>
+    <td align="right" >1</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateRating('this.ratingID')">Edit</a></td>
+    <td><a href="#" onclick="deleteRating('this.ratingID')">Delete</a></td>
+    <td align="right" >2</td>
+    <td align="right" >4</td>
+    <td align="right" >3</td>
+    <td align="right" >2</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateRating('this.ratingID')">Edit</a></td>
+    <td><a href="#" onclick="deleteRating('this.ratingID')">Delete</a></td>
+    <td align="right" >3</td>
+    <td align="right" >5</td>
+    <td align="right" >3</td>
+    <td align="right" >1</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateRating('this.ratingID')">Edit</a></td>
+    <td><a href="#" onclick="deleteRating('this.ratingID')">Delete</a></td>
+    <td align="right" >4</td>
+    <td align="right" >3</td>
+    <td align="right" >4</td>
+    <td align="right" >2</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addRating">
+        <legend><strong>Add Rating</strong></legend>
+          <fieldset class="fields">
+            <label> Rating </label> <input type="number" name="rating">
+            <label> Customer ID </label> <input type="number" name="customer_id">
+            <label> Dish ID </label> <input type="number" name="dish_id">
+      </fieldset>
+          <input class="btn" type="submit" id="addRating" value="Add Rating">
+          <input class="btn" type="button" value="Cancel" onClick="browseRatings()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="UpdateRating">
+        <legend><strong>Update Rating</strong></legend>
+          <fieldset class="fields">
+          <input type="hidden" name="ratingID" id="updateratingID" value="1">
+          <label> ID: </label> 1
+            <label> Rating </label> <input type="number" name="rating" value="1">
+            <label> Customer ID </label> <input type="number" name="customer_id">
+            <label> Dish ID </label> <input type="number" name="dish_id">
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveRating" value="Save Update Rating">
+          <input class="btn" type="button" value="Cancel" onClick="browseRatings()">
+	</form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteRating">
+      <legend><strong>Delete Rating</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="ratingID" id="deleteratingID" value="1">
+          <label><strong>ID:</strong></label> 1
+            <label> <strong>Rating</strong> </label> 5
+            <label> Customer ID </label> 1
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteRating" value="Delete Rating">
+          <input class="btn" type="button" value="Cancel" onClick="browseRatings()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>
