@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request, redirect
+from flask import Flask, render_template, url_for, json, request, redirect
 from flask_mysqldb import MySQL
 import os
 # import database.db_connector as db
@@ -20,10 +20,24 @@ mysql = MySQL(app)
 
 # Routes 
 
-@app.route('/')
-def root():
-    return redirect("/customers")
+def connect(command, values=None):
+    mycursor = mysql.connection.cursor()
+    if values:
+        mycursor.execute(command, values)
+        mysql.connection.commit()
+    else:
+        mycursor.execute(command)
 
+    if 'SELECT' in command:
+        return mycursor.fetchall
+
+
+# index
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+# customers
 @app.route('/customers', methods = ["POST", "GET"])
 def customers():
     # READ
