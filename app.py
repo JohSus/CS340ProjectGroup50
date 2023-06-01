@@ -26,6 +26,7 @@ def root():
 
 @app.route('/customers', methods = ["POST", "GET"])
 def customers():
+    # READ
     if request.method == "GET":
 
         query = "SELECT customer_id AS customerID, customer_name AS customerName, phone_number AS phoneNumber FROM Customers;"
@@ -36,6 +37,7 @@ def customers():
         # render edit_customer page passing query data to the edit_customers template
         return render_template("customers.j2", data = data)
 
+    # ADD
     if request.method == "POST":
         if request.form.get("add_customer"):
             customer_name = request.form["customer_name"]
@@ -65,9 +67,8 @@ def edit_customers(id):
         query1 = "SELECT * FROM Customers WHERE customer_id = %s;" % (id)
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
-        data = cursor.fetchall()
+        results = cursor.fetchall()
 
-        return render_template("edit_customers.j2", data = data)
 
     if request.method == "POST":
         if request.form.get("edit_customer"):
@@ -79,7 +80,10 @@ def edit_customers(id):
             cursor.execute(query, (customer_name, phone_number))
             mysql.connection.commit()
 
-    return redirect("/customers")
+            return redirect("/customers")
+
+
+    return render_template("customers.j2", Customers = results)
 
 # Listener
 
