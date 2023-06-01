@@ -42,7 +42,7 @@ def customers():
             cursor.execute(query, (customer_name, phone_number))
             mysql.connection.commit()
 
-            return redirect("/people")
+            return redirect("/customers")
 
     return render_template("customers.j2", Customers = results)
 
@@ -53,7 +53,7 @@ def delete_customers(id):
     cursor.execute(query, (id,))
     mysql.connection.commit()
 
-    return redirect("/people")
+    return redirect("/customers")
 
 @app.route('/edit-customers/<int:id>', methods=["POST", "GET"])
 def edit_customers(id):
@@ -75,7 +75,7 @@ def edit_customers(id):
             cursor.execute(query, (customer_name, phone_number))
             mysql.connection.commit()
 
-    return redirect("/people")
+    return redirect("/customers")
 
 # Listener
 
