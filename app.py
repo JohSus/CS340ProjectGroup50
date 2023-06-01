@@ -7,6 +7,7 @@ import os
 
 app = Flask(__name__)
 
+# database connection
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
 app.config['MYSQL_USER'] = 'cs340_wubr'
 app.config['MYSQL_PASSWORD'] = '9544' #last 4 of onid
@@ -32,6 +33,9 @@ def customers():
         cursor.execute(query)
         results = cursor.fetchall()
 
+        # render edit_customer page passing query data to the edit_customers template
+        return render_template("customers.j2", Customers = results)
+
     if request.method == "POST":
         if request.form.get("Add_Customer"):
             customer_name = request.form["customer_name"]
@@ -44,7 +48,7 @@ def customers():
 
             return redirect("/customers")
 
-    return render_template("customers.j2", Customers = results)
+
 
 @app.route('/delete-customers/<int:id>')
 def delete_customers(id):
