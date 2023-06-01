@@ -1,35 +1,111 @@
+</html>
+<!DOCTYPE html>
 <html>
+
 <head>
-    <title>OSU - CS 340 - Introduction to Databases - Flask Demo Project</title>
+    <title>Customers</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript"> </script>
 </head>
+
 <body>
-<table>
-    <thead>
-    <tr>
-        <!-- Iterate through each key in the first entry to get the
+    <h1>Customers</h1>
+
+    [ <a href="/customers">Home</a> | <a href="/orders">Orders</a> | <a href="/customers">Customers</a> | <a
+        href="/dishes">Dishes</a> |
+    <a href="/order_has_dishes">Order has Dishes</a> | <a href="/ratings">Ratings</a> |
+    <a href="/dietary_restrictions">Dietary Restrictions</a> | <a
+        href="/customers_has_dietary_restrictions">Customer Dietary Restrictions</a> ]
+
+    <div>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+            </tr>
+            <table>
+                <thead>
+                    <tr>
+                        <!-- Iterate through each key in the first entry to get the
         column name -->
-        {% for key in Customers[0].keys() %}
+                        {% for key in Customers[0].keys() %}
 
-        <!-- Create a <th> tag with the key inside of it, this will be
+                        <!-- Create a <th> tag with the key inside of it, this will be
         our header row -->
-        <th>{{ key }}</th>
+                        <th>{{ key }}</th>
 
-        <!-- End of this for loop -->
-        {% endfor %}
-    </tr>
-    <tbody>
+                        <!-- End of this for loop -->
+                        {% endfor %}
+                    </tr>
+                <tbody>
 
-    <!-- Now, iterate through every person in bsg_people -->
-    {% for customer_id in Customers %}
-    <tr>
-        <!-- Then iterate through every key in the current person dictionary -->
-        {% for key in customer_id.keys() %}
+                    <!-- Now, iterate through every person in bsg_people -->
+                    {% for customer_id in Customers %}
+                    <tr>
+                        <!-- Then iterate through every key in the current person dictionary -->
+                        {% for key in customer_id.keys() %}
 
-        <!-- Create a <td> element with the value of that key in it -->
-        <td>{{customer_id[key]}}</td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-    </table>
+                        <!-- Create a <td> element with the value of that key in it -->
+                        <td>{{customer_id[key]}}</td>
+                        {% endfor %}
+                        <td><a href="/edit-customers/{{['customer_id']}}">Edit</a></td>
+                    </tr>
+                    {% endfor %}
+            </table>
+        </table>
+        <p>&nbsp;</p>
+
+    </div> <!-- add -->
+    <div id="insert">
+        <form action="/customers" method="POST" id="add_customer">
+            <legend><strong>Add Customer</strong></legend>
+            <fieldset class="fields">
+                <label> Name </label> <input type="text" name="customer_name">
+                <label> Phone Number </label> <input type="text" name="phone_number">
+            </fieldset>
+            <input class="btn" type="submit" name="add_customer" value="Add Customer">
+            <input class="btn" type="button" value="Cancel">
+        </form>
+    </div><!-- add -->
+
+    <p>&nbsp;</p>
+
+    <!-- update -->
+    <div id="edit_customers">
+        <form action="/edit_customers/{{customer_id}}" method="POST" id="edit-customer">
+            <legend><strong>Update Customer</strong></legend>
+            <fieldset class="fields">
+                <label> Name </label> <input type="text" name="customer_name" value="">
+                <label> Phone Number </label> <input type="text" name="phone_number">
+            </fieldset>
+            <input class="btn" type="submit" name="edit_customers" value="Save Update Customer">
+            <input class="btn" type="button" value="Cancel" onClick="browseCustomers()">
+        </form>
+
+    </div><!-- update -->
+
+    <p>&nbsp;</p>
+
+    <!-- delete -->
+    <div style="display: block">
+        <form action="/delete-customers/{{customer_id}}" method="POST" id="delete-customers">
+            <legend><strong>Delete Customer</strong></legend>
+            <fieldset class="fields">
+                <label for="delete-customer">Delete a customer:</label> 
+                    <select name="customers" id="customers"> 
+                        {% for customer in Customers %} 
+                        <option value={{customer['customerID']}}>{{customer['customerName']}}</option> 
+                        {% endfor %}
+                    </select>
+
+            </fieldset>
+            <input class="btn" type="submit" name="delete_customers" value="Delete Customer">
+            <input class="btn" type="button" value="Cancel">
+        </form>
+    </div><!-- delete -->
+
 </body>
+
 </html>

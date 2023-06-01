@@ -37,7 +37,7 @@ def customers():
         return render_template("customers.j2", Customers = results)
 
     if request.method == "POST":
-        if request.form.get("Add_Customer"):
+        if request.form.get("add_customer"):
             customer_name = request.form["customer_name"]
             phone_number = request.form["phone_number"]
 
