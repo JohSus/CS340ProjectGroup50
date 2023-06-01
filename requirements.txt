@@ -1,15 +1,1 @@
-blinker==1.5
-click==8.0.4
-distlib==0.3.6
-filelock==3.4.1
-Flask==2.0.3
-Flask-MySQLdb==1.0.1
 gunicorn==20.1.0
-itsdangerous==2.0.1
-Jinja2==3.0.3
-MarkupSafe==2.0.1
-mysqlclient==2.1.1
-platformdirs==2.4.0
-python-dotenv==0.20.0
-virtualenv==20.17.1
-Werkzeug==2.0.3
