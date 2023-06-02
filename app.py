@@ -299,7 +299,7 @@ def ratings():
             customer_id = request.form["customer_id"]
             dish_id = request.form["dish_id"]
 
-            query = "INSERT INTO Customers (rating, customer_id, dish_id) VALUES (%s, %s);"
+            query = "INSERT INTO Ratings (rating, customer_id, dish_id) VALUES (%s, %s, %s);"
             cursor = mysql.connection.cursor()
             cursor.execute(query, (rating, customer_id, dish_id))
             mysql.connection.commit()
@@ -308,24 +308,24 @@ def ratings():
 
 
 
-@app.route('/delete_ratings/<int:id>')
-def delete_ratings(id):
-    query = "DELETE FROM Customers WHERE rating_id = %s;"
+@app.route('/delete_rating/<int:id>')
+def delete_rating(id):
+    query = "DELETE FROM Ratings WHERE rating_id = %s;"
     cursor = mysql.connection.cursor()
     cursor.execute(query, (id,))
     mysql.connection.commit()
 
     return redirect("/ratings")
 
-@app.route('/edit_ratings/<int:id>', methods = ['GET', 'POST'])
-def edit_ratings(id):
+@app.route('/edit_rating/<int:id>', methods = ['GET', 'POST'])
+def edit_rating(id):
 
     if request.method == "POST":
         rating = request.form["rating"]
         customer_id = request.form["customer_id"]
         dish_id = request.form["dish_id"]
 
-        query = "UPDATE Customers SET rating_name = %s, customer_id = %s, dish_id = %s WHERE rating_id = %s;"
+        query = "UPDATE Ratings SET rating_name = %s, customer_id = %s, dish_id = %s WHERE rating_id = %s;"
         values = (rating, customer_id, dish_id, id)
         cursor = mysql.connection.cursor()
         cursor.execute(query, values)
@@ -338,7 +338,7 @@ def edit_ratings(id):
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
-        return render_template("edit_ratings.j2", data = data)
+        return render_template("edit_rating.j2", data = data)
 
 # dietary_restrictions
 

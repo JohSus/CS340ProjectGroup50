@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>Edit Rating</title>
+</head>
+
+<body>
+    <div id="edit_rating">
+        <form action="/edit_rating/{{data[0].ID}}" method="POST" id="edit_rating">
+            <legend><strong>Edit Customer</strong></legend>
+            <fieldset class="fields">
+                <label id="rating_id"> ID: {{data[0].ID}} </label>
+                <label> Rating:  </label>
+                <input type="text" id="rating" name="rating" value="{{data[0].rating}}" />
+                <label> Customer ID: </label>
+                <input type="text" id="customer_id" name="customer_id" value="{{data[0].customerID}}" />
+                <label> Dish ID: </label>
+                <input type="text" id="dish_id" name="dish_id" value="{{data[0].dishID}}" />
+            </fieldset>
+            <input class="btn" type="submit" id="edit_rating" name="edit_rating" value="Edit Rating" />
+        </form>
+    </div>
+</body>
+
+</html>
