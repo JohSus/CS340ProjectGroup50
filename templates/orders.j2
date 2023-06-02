@@ -1,0 +1,225 @@
+<html>
+    <head>
+    <title>Orders</title>
+    <script language="JavaScript">
+        function showform(dowhat) {
+        /*
+         * four DIVS: browse, insert, update, delete
+         * this function sets one visible the others not
+         */
+        if (dowhat == "insert") {
+          document.getElementById("browse").style.display = "none";
+          document.getElementById("insert").style.display = "block";
+          document.getElementById("update").style.display = "none";
+          document.getElementById("delete").style.display = "none";
+        } else if (dowhat == "update") {
+          document.getElementById("browse").style.display = "none";
+          document.getElementById("insert").style.display = "none";
+          document.getElementById("update").style.display = "block";
+          document.getElementById("delete").style.display = "none";
+        } else if (dowhat == "delete") {
+          document.getElementById("browse").style.display = "none";
+          document.getElementById("insert").style.display = "none";
+          document.getElementById("update").style.display = "none";
+          document.getElementById("delete").style.display = "block";
+        } else if (dowhat == "all") {
+          document.getElementById("browse").style.display = "block";
+          document.getElementById("insert").style.display = "block";
+          document.getElementById("update").style.display = "block";
+          document.getElementById("delete").style.display = "block";
+        } else {
+          //by default display browse
+          document.getElementById("browse").style.display = "block";
+          document.getElementById("insert").style.display = "none";
+          document.getElementById("update").style.display = "none";
+          document.getElementById("delete").style.display = "none";
+        }
+        }
+    function newOrder() {
+        showform("insert");
+    }
+
+    function updateOrder(pid) {
+        var table = document.getElementById("order_table");
+        var data = table.getElementsByTagName("td");
+
+        for (var i = 2; i < data.length; i += 7) {
+            if (data[i].innerText == pid) {
+                var order_time = data[i + 1].innerText;
+                var customer_id = data[i + 2].innerText;
+
+                document.getElementById("update_order_id").value = pid;
+                document.getElementById("update_id").innerText = ` ID: ${pid} `;
+                document.getElementById("update_order_time").value = address;
+                document.getElementById("update_customer_id").value = capacity;
+                break;
+            }
+        }
+
+        showform("update");
+    }
+
+    function deleteOrder(pid) {
+        var table = document.getElementById("order_table");
+        var data = table.getElementsByTagName("td");
+
+        for (var i = 2; i < data.length; i += 7) {
+            if (data[i].innerText == pid) {
+                var address = data[i + 1].innerText;
+
+                document.getElementById("delete_order_id").value = pid;
+                document.getElementById("delete_id").innerText = pid;
+                document.getElementById("delete_order_time").innerText = order_time;
+                document.getElementById("delete_customer_id").innerText = customer_id;
+            }
+        }
+
+        showform("delete");
+    }
+
+    function browseOrders() {
+        showform("browse");
+    }
+    function showAll() {
+        showform("all");
+    }
+    </script>
+    </head>
+
+    <body onload="browseOrders()">
+
+    <h1>Orders</h1>
+
+    [ <a href="/">Home</a> | 
+    <a href="/orders">Orders</a> | 
+    <a href="/customers">Customers</a> | 
+    <a href="/dishes">Dishes</a> | 
+    <a href="/order_has_dishes">Order has Dishes</a> | 
+    <a href="/ratings">Ratings</a> | 
+    <a href="/dietary_restrictions">Dietary Restrictions</a> | 
+    <a href="/customers_has_dietary_restrictions">Customer Dietary Restrictions</a> ]
+
+
+    <div id="browse">
+
+        {% if not orders %}
+        <table id="order_table" border="1" cellpadding="5">
+            <tr>
+                <th><a href="#" onclick="newOrder()">New</a></th>
+                <th></th>
+                <th>ID</th>
+                <th>Order Time</th>
+                <th>Customer ID</th>
+                </tr>
+            <tr></tr>
+        </table>
+
+        {% else %}
+        <table id="venue_table" border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th><a href="#" onclick="newOrder()">New</a></th>
+                <th></th>
+                <th>ID</th>
+                <th>Order Time</th>
+                <th>Customer ID</th>
+            </tr>
+        </thead>
+
+        {% for item in order %} {% set order_id = item['order_id'] %}
+        <tr>
+            <td>
+                <a href="#" onclick="updateOrder('{{order_id}}')">Edit</a>
+            </td>
+            <td>
+                <a href="#" onclick="deleteOrder('{{order_id}}')">Delete</a>
+            </td>
+            <td>{{item['order_id']}}</td>
+            <td>{{item['order_time']}}</td>
+            <td>{{item['customer_id']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <p>&nbsp;</p>
+    </div>
+    <!-- browse -->
+
+    <div id="insert">
+        <form id="insert_order" action="/orders" method="post">
+            <legend><strong>Add Order</strong></legend>
+            <fieldset class="fields">
+                <label> order_time </label> <input type="text" name="order_time" placeholder="year-mo-dy hr:mn:sc" />
+                <label> customer_id </label> <input type="text" name="customer_id" />
+            </fieldset>
+            <input type="submit" value="insert order" , name="insert_order" />
+            <input
+                class="btn"
+                type="button"
+                value="cancel"
+                onclick="browseOrders()"
+            />
+        </form>
+    </div>
+    <!-- insert -->
+    <p>&nbsp;</p>
+
+    <div id="update">
+      <form method="POST" id="UpdateOrder">
+        <legend><strong>Update Order</strong></legend>
+        <fieldset class="fields">
+          <input type="hidden" name="method" value="put" />
+          <input type="hidden" name="venue_id" id="update_order_id" value="" />
+          <label id="update_id"> ID: </label>
+          <label> order time: </label>
+          <input type="text" id="update_order_time" name="order_time" value="" />
+          <label> customer id: </label>
+          <input type="text" id="update_customer_id" name="customer_id" value="" />
+          />
+        </fieldset>
+        <input
+          class="btn"
+          type="submit"
+          id="UpdateOrder"
+          value="Update Order"
+        />
+        <input
+          class="btn"
+          type="button"
+          value="cancel"
+          onclick="browseOrders()"
+        />
+      </form>
+    </div>
+    <!-- update -->
+    <p>&nbsp;</p>
+
+    <div id="delete" style="display: block">
+      <form method="POST" id="deleteOrder">
+        <legend><strong>Delete Order</strong></legend>
+        <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="method" value="delete" />
+          <input type="hidden" name="order_id" id="delete_order_id" value="" />
+          <label><strong>ID:</strong> </label><span id="delete_id"></span>
+          <label> <strong>order time:</strong> </label
+          ><span id="delete_order_time"></span>
+
+        </fieldset>
+        <input
+          class="btn"
+          type="submit"
+          id="DeleteOrder"
+          value="Delete Order"
+        />
+        <input
+          class="btn"
+          type="button"
+          value="cancel"
+          onclick="browseOrders()"
+        />
+      </form>
+    </div>
+  </body>
+</html>
