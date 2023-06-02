@@ -218,9 +218,127 @@ def edit_dishes(id):
         data = cursor.fetchall()
         return render_template("edit_dishes.j2", data = data)
 
-# order_has_dishes intersection
+# orders_has_dishes intersection
+@app.route('/order_dishes', methods = ["POST", "GET"])
+def order_dishes():
+    # READ
+    if request.method == "GET":
+
+        query = "SELECT order_id AS 'orderID', dish_id AS 'dishID' FROM Orders_has_Dishes;"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        # render edit_order_dishes page passing query data to the edit_order_dishes template
+        return render_template("order_dishes.j2", data = data)
+
+    # ADD NEW
+    if request.method == "POST":
+        if request.form.get("add_order_dishes"):
+            order_id = request.form["order_id"]
+            dish_id = request.form["dish_id"]
+
+            query = "INSERT INTO Orders_has_Dishes (order_id, dish_id) VALUES (%s, %s);"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query, (order_id, dish_id))
+            mysql.connection.commit()
+
+            return redirect("/order_dishes")
+
+
+
+@app.route('/delete_order_dishes/<int:id>')
+def delete_order_dishes(id):
+    query = "DELETE FROM Orders_has_Dishes WHERE order_id = %s;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query, (id,))
+    mysql.connection.commit()
+
+    return redirect("/order_dishes")
+
+@app.route('/edit_order_dishes/<int:id>', methods = ['GET', 'POST'])
+def edit_order_dishes(id):
+
+    if request.method == "POST":
+        order_id = request.form["order_id"]
+        dish_id = request.form["dish_id"]
+
+        query = "UPDATE Orders_has_Dishes SET order_id = %s, dish_id = %s WHERE order_id = %s;"
+        values = (order_id, dish_id, id)
+        cursor = mysql.connection.cursor()
+        cursor.execute(query, values)
+        mysql.connection.commit()
+
+        return redirect("/order_dishes")
+
+    if request.method == "GET":
+        query1 = "SELECT dish_id AS ID, order_id AS dishName, dish_id FROM Orders_has_Dishes WHERE dish_id = %s;" % (id)
+        cursor = mysql.connection.cursor()
+        cursor.execute(query1)
+        data = cursor.fetchall()
+        return render_template("edit_order_dishes.j2", data = data)
 
 # ratings
+@app.route('/ratings', methods = ["POST", "GET"])
+def ratings():
+    # READ
+    if request.method == "GET":
+
+        query = "SELECT rating_id AS 'ID', rating AS 'Rating', customer_id AS 'Customer ID', dish_id AS 'Dish ID' FROM Ratings;"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        # render edit_rating page passing query data to the ratings template
+        return render_template("ratings.j2", data = data)
+
+    # ADD NEW
+    if request.method == "POST":
+        if request.form.get("add_rating"):
+            rating = request.form["rating"]
+            customer_id = request.form["customer_id"]
+            dish_id = request.form["dish_id"]
+
+            query = "INSERT INTO Customers (rating, customer_id, dish_id) VALUES (%s, %s);"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query, (rating, customer_id, dish_id))
+            mysql.connection.commit()
+
+            return redirect("/ratings")
+
+
+
+@app.route('/delete_ratings/<int:id>')
+def delete_ratings(id):
+    query = "DELETE FROM Customers WHERE rating_id = %s;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query, (id,))
+    mysql.connection.commit()
+
+    return redirect("/ratings")
+
+@app.route('/edit_ratings/<int:id>', methods = ['GET', 'POST'])
+def edit_ratings(id):
+
+    if request.method == "POST":
+        rating = request.form["rating"]
+        customer_id = request.form["customer_id"]
+        dish_id = request.form["dish_id"]
+
+        query = "UPDATE Customers SET rating_name = %s, customer_id = %s, dish_id = %s WHERE rating_id = %s;"
+        values = (rating, customer_id, dish_id, id)
+        cursor = mysql.connection.cursor()
+        cursor.execute(query, values)
+        mysql.connection.commit()
+
+        return redirect("/ratings")
+
+    if request.method == "GET":
+        query1 = "SELECT rating_id AS ID, rating, customer_id AS customerID, dish_id AS dishID FROM Ratings WHERE rating_id = %s;" % (id)
+        cursor = mysql.connection.cursor()
+        cursor.execute(query1)
+        data = cursor.fetchall()
+        return render_template("edit_ratings.j2", data = data)
 
 # dietary_restrictions
 
@@ -229,7 +347,7 @@ def edit_dishes(id):
 # Listener
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 95444)) 
+    port = int(os.environ.get('PORT', 9549)) 
     #                                 ^^^^
     #              You can replace this number with any valid port
     
