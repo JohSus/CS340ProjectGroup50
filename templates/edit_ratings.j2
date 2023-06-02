@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>Edit Customer</title>
+</head>
+
+<body>
+    <div id="edit_customer">
+        <form action="/edit_customers/{{data[0].customerID}}" method="POST" id="edit_customer">
+            <legend><strong>Edit Customer</strong></legend>
+            <fieldset class="fields">
+                <label id="customer_id"> ID: {{data[0].customerID}} </label>
+                <label> Customer Name:  </label>
+                <input type="text" id="customer_name" name="customer_name" value="{{data[0].customerName}}" />
+                <label> Phone Number: </label>
+                <input type="text" id="phone_number" name="phone_number" value="{{data[0].phoneNumber}}" />
+            </fieldset>
+            <input class="btn" type="submit" id="edit_customer" name="edit_customer" value="Edit Customer" />
+        </form>
+    </div>
+</body>
+
+</html>
