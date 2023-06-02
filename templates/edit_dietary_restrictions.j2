@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <title>Edit Dietary Restriction</title>
+</head>
+
+<body>
+    <div id="edit_dietary_restriction">
+        <form action="/edit_dietary_restrictions/{{data[0].ID}}" method="POST" id="edit_order">
+            <legend><strong>Edit Order</strong></legend>
+            <fieldset class="fields">
+                <label id="dietary_restriction_id"> ID: {{data[0].ID}} </label>
+                <label> Description:  </label>
+                <input type="text" id="description" name="description" value="{{data[0].description}}" />
+            </fieldset>
+            <input class="btn" type="submit" id="edit_dietary_restriction" name="edit_dietary_restriction" value="Edit Dietary Restriction" />
+        </form>
+    </div>
+</body>
+
+</html>

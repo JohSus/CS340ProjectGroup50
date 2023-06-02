@@ -284,7 +284,7 @@ def ratings():
     # READ
     if request.method == "GET":
 
-        query = "SELECT rating_id AS 'ID', rating AS 'Rating', customer_id AS 'Customer ID', dish_id AS 'Dish ID' FROM Ratings;"
+        query = "SELECT rating_id AS 'ID', rating, customer_id AS 'customerID', dish_id AS 'dishID' FROM Ratings;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -341,6 +341,60 @@ def edit_rating(id):
         return render_template("edit_rating.j2", data = data)
 
 # dietary_restrictions
+@app.route('/dietary_restrictions', methods = ["POST", "GET"])
+def dietary_restrictions():
+    # READ
+    if request.method == "GET":
+
+        query = "SELECT dietary_restriction_id AS 'ID', description AS 'Description' FROM Dietary_Restrictions;"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        # render edit_customer page passing query data to the edit_customers template
+        return render_template("dietary_restrictions.j2", data = data)
+
+    # ADD NEW
+    if request.method == "POST":
+        if request.form.get("add_dietary_restriction"):
+            description = request.form["description"]
+
+            query = "INSERT INTO Dietary_Restrictions (description) VALUES (%s);"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query, (description))
+            mysql.connection.commit()
+
+            return redirect("/dietary_restrictions")
+
+@app.route('/delete_dietary_restrictions/<int:id>')
+def delete_dietary_restrictions(id):
+    query = "DELETE FROM Dietary_Restrictions WHERE dietary_restriction_id = %s;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query, (id,))
+    mysql.connection.commit()
+
+    return redirect("/dietary_restrictions")
+
+@app.route('/edit_dietary_restrictions/<int:id>', methods = ['GET', 'POST'])
+def edit_dietary_restrictions(id):
+
+    if request.method == "POST":
+        description = request.form["description"]
+
+        query = "UPDATE Dietary_Restrictions SET description = %s WHERE dietary_restriction_id = %s;"
+        values = (description, id)
+        cursor = mysql.connection.cursor()
+        cursor.execute(query, values)
+        mysql.connection.commit()
+
+        return redirect("/dietary_restrictions")
+
+    if request.method == "GET":
+        query1 = "SELECT dietary_restriction_id AS 'ID', description FROM Dietary Restrictions WHERE dietary_restriction_id = %s;" % (id)
+        cursor = mysql.connection.cursor()
+        cursor.execute(query1)
+        data = cursor.fetchall()
+        return render_template("edit_dietary_restrictions.j2", data = data)
 
 #customer_dietary_restrictions
 
