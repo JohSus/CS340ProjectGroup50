@@ -9,7 +9,7 @@
         <form action="/edit_dietary_restrictions/{{data[0].ID}}" method="POST" id="edit_order">
             <legend><strong>Edit Order</strong></legend>
             <fieldset class="fields">
-                <label id="dietary_restriction_id"> ID: {{data[0].ID}} </label>
+                <label id="restriction_id"> ID: {{data[0].ID}} </label>
                 <label> Description:  </label>
                 <input type="text" id="description" name="description" value="{{data[0].description}}" />
             </fieldset>

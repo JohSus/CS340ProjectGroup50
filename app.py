@@ -346,7 +346,7 @@ def dietary_restrictions():
     # READ
     if request.method == "GET":
 
-        query = "SELECT dietary_restriction_id AS 'ID', description AS 'Description' FROM Dietary_Restrictions;"
+        query = "SELECT restriction_id AS 'ID', description AS 'Description' FROM Dietary_Restrictions;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -361,14 +361,14 @@ def dietary_restrictions():
 
             query = "INSERT INTO Dietary_Restrictions (description) VALUES (%s);"
             cursor = mysql.connection.cursor()
-            cursor.execute(query, (description))
+            cursor.execute(query, (description,))
             mysql.connection.commit()
 
             return redirect("/dietary_restrictions")
 
 @app.route('/delete_dietary_restrictions/<int:id>')
 def delete_dietary_restrictions(id):
-    query = "DELETE FROM Dietary_Restrictions WHERE dietary_restriction_id = %s;"
+    query = "DELETE FROM Dietary_Restrictions WHERE restriction_id = %s;"
     cursor = mysql.connection.cursor()
     cursor.execute(query, (id,))
     mysql.connection.commit()
@@ -381,7 +381,7 @@ def edit_dietary_restrictions(id):
     if request.method == "POST":
         description = request.form["description"]
 
-        query = "UPDATE Dietary_Restrictions SET description = %s WHERE dietary_restriction_id = %s;"
+        query = "UPDATE Dietary_Restrictions SET description = %s WHERE restriction_id = %s;"
         values = (description, id)
         cursor = mysql.connection.cursor()
         cursor.execute(query, values)
@@ -390,7 +390,7 @@ def edit_dietary_restrictions(id):
         return redirect("/dietary_restrictions")
 
     if request.method == "GET":
-        query1 = "SELECT dietary_restriction_id AS 'ID', description FROM Dietary Restrictions WHERE dietary_restriction_id = %s;" % (id)
+        query1 = "SELECT restriction_id AS 'ID', description FROM Dietary_Restrictions WHERE restriction_id = %s;" % (id)
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
