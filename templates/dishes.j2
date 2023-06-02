@@ -3,13 +3,13 @@
 <html>
 
 <head>
-    <title>Customers</title>
+    <title>Dishes</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript"> </script>
 </head>
 
 <body>
-    <h1>Orders</h1>
+    <h1>Dishes</h1>
 
     [ <a href="/">Home</a> | <a href="/orders">Orders</a> | <a href="/customers">Customers</a> | <a
         href="/dishes">Dishes</a> |
@@ -36,16 +36,16 @@
                 <tbody>
 
                     <!-- Now, iterate through every person in bsg_people -->
-                    {% for order in data %}
+                    {% for dish in data %}
                     <tr>
                         <!-- Then iterate through every key in the current person dictionary -->
-                        {% for key in order.keys() %}
+                        {% for key in dish.keys() %}
 
                         <!-- Create a <td> element with the value of that key in it -->
-                        <td>{{order[key]}}</td>
+                        <td>{{dish[key]}}</td>
                         {% endfor %}
-                        <td><a href="/edit_orders/{{order.ID}}">Edit</a></td>
-                        <td><a href="/delete_orders/{{order.ID}}">Delete</a></td>
+                        <td><a href="/edit_dishes/{{dish.ID}}">Edit</a></td>
+                        <td><a href="/delete_dishes/{{dish.ID}}">Delete</a></td>
                     </tr>
                     {% endfor %}
             </table>
@@ -54,15 +54,13 @@
 
     </div> <!-- add -->
     <div id="insert">
-        <form action="/orders" method="POST" id="add_order">
-            <legend><strong>Add Order</strong></legend>
+        <form action="/dishes" method="POST" id="add_dish">
+            <legend><strong>Add Dish</strong></legend>
             <fieldset class="fields">
-                <label> Time </label> <input type="text" name="time" required>
-                <label> Customer ID </label> <input type="text" name="customer_id" required>
-                <label> Dish Quantity </label> <input type="text" name="dish_quantity" required>
+                <label> Dish Name </label> <input type="text" name="dish_name" required>
+                <label> Price </label> <input type="text" name="price" required>
             </fieldset>
-            <input class="btn" type="submit" name="add_order" value="Add Order">
-            <input class="btn" type="button" value="Cancel">
+            <input class="btn" type="submit" name="add_dish" value="Add Dish">
         </form>
     </div><!-- add -->
 

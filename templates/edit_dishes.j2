@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>Edit Dish</title>
+</head>
+
+<body>
+    <div id="edit_dish">
+        <form action="/edit_dishes/{{data[0].ID}}" method="POST" id="edit_dish">
+            <legend><strong>Edit Dish</strong></legend>
+            <fieldset class="fields">
+                <label id="dish_id"> ID: {{data[0].ID}} </label>
+                <label> Dish Name:  </label>
+                <input type="text" id="dish_name" name="dish_name" value="{{data[0].dishName}}" />
+                <label> Price: </label>
+                <input type="text" id="price" name="price" value="{{data[0].price}}" />
+            </fieldset>
+            <input class="btn" type="submit" id="edit_dish" name="edit_dish" value="Edit Dish" />
+        </form>
+    </div>
+</body>
+
+</html>
