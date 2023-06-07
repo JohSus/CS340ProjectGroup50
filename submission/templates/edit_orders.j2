@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>Edit Order</title>
+</head>
+
+<body>
+    <div id="edit_order">
+        <form action="/edit_orders/{{data[0].ID}}" method="POST" id="edit_order">
+            <legend><strong>Edit Order</strong></legend>
+            <fieldset class="fields">
+                <label id="customer_id"> ID: {{data[0].ID}} </label>
+                <label> Time:  </label>
+                <input type="text" id="time" name="time" value="{{data[0].time}}" />
+                <label> Customer ID: </label>
+                <input type="text" id="customer_id" name="customer_id" value="{{data[0].customerID}}" />
+                <label> Dish Quantity: </label>
+                <input type="text" id="dish_quantity" name="dish_quantity" value="{{data[0].dishQuantity}}" />
+            </fieldset>
+            <input class="btn" type="submit" id="edit_order" name="edit_order" value="Edit Order" />
+        </form>
+    </div>
+</body>
+
+</html>

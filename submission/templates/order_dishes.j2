@@ -1,0 +1,71 @@
+</html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Orders has Dishes</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript"> </script>
+</head>
+
+<body>
+    <h1>Orders has Dishes</h1>
+
+    [ <a href="/">Home</a> | <a href="/orders">Orders</a> | <a href="/customers">Customers</a> | <a
+        href="/dishes">Dishes</a> |
+    <a href="/order_dishes">Order has Dishes</a> | <a href="/ratings">Ratings</a> |
+    <a href="/dietary_restrictions">Dietary Restrictions</a> | <a
+        href="/customers_has_dietary_restrictions">Customer Dietary Restrictions</a> ]
+
+    <div>
+        <table border="1" cellpadding="5">
+            <table>
+                <thead>
+                    <tr>
+                        <!-- Iterate through each key in the first entry to get the
+        column name -->
+                        {% for key in data[0].keys() %}
+
+                        <!-- Create a <th> tag with the key inside of it, this will be
+        our header row -->
+                        <th>{{ key }}</th>
+
+                        <!-- End of this for loop -->
+                        {% endfor %}
+                    </tr>
+                <tbody>
+
+                    <!-- Now, iterate through every person in bsg_people -->
+                    {% for order_dish in data %}
+                    <tr>
+                        <!-- Then iterate through every key in the current person dictionary -->
+                        {% for key in order_dish.keys() %}
+
+                        <!-- Create a <td> element with the value of that key in it -->
+                        <td>{{order_dish[key]}}</td>
+                        {% endfor %}
+                        <td><a href="/edit_order_dishes/{{order_dish.ID}}">Edit</a></td>
+                        <td><a href="/delete_order_dishes/{{order_dish.ID}}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+            </table>
+        </table>
+        <p>&nbsp;</p>
+
+    </div> <!-- add -->
+    <div id="insert">
+        <form action="/order_dishes" method="POST" id="add_order_dishes">
+            <legend><strong>Add Order has Dishes</strong></legend>
+            <fieldset class="fields">
+                <label> Order ID </label> <input type="text" name="order_id" required>
+                <label> Dish ID </label> <input type="text" name="dish_id" required>
+            </fieldset>
+            <input class="btn" type="submit" name="add_order_dishes" value="Add Order has Dishes">
+        </form>
+    </div><!-- add -->
+
+    <p>&nbsp;</p>
+
+</body>
+
+</html>

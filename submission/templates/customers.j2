@@ -1,0 +1,72 @@
+</html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Customers</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript"> </script>
+</head>
+
+<body>
+    <h1>Customers</h1>
+
+    [ <a href="/">Home</a> | <a href="/orders">Orders</a> | <a href="/customers">Customers</a> | <a
+        href="/dishes">Dishes</a> |
+    <a href="/order_dishes">Order has Dishes</a> | <a href="/ratings">Ratings</a> |
+    <a href="/dietary_restrictions">Dietary Restrictions</a> | <a
+        href="/customers_has_dietary_restrictions">Customer Dietary Restrictions</a> ]
+
+    <div>
+        <table border="1" cellpadding="5">
+            <table>
+                <thead>
+                    <tr>
+                        <!-- Iterate through each key in the first entry to get the
+        column name -->
+                        {% for key in data[0].keys() %}
+
+                        <!-- Create a <th> tag with the key inside of it, this will be
+        our header row -->
+                        <th>{{ key }}</th>
+
+                        <!-- End of this for loop -->
+                        {% endfor %}
+                    </tr>
+                <tbody>
+
+                    <!-- Now, iterate through every person in bsg_people -->
+                    {% for customer in data %}
+                    <tr>
+                        <!-- Then iterate through every key in the current person dictionary -->
+                        {% for key in customer.keys() %}
+
+                        <!-- Create a <td> element with the value of that key in it -->
+                        <td>{{customer[key]}}</td>
+                        {% endfor %}
+                        <td><a href="/edit_customers/{{customer.ID}}">Edit</a></td>
+                        <td><a href="/delete_customers/{{customer.ID}}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+            </table>
+        </table>
+        <p>&nbsp;</p>
+
+    </div> <!-- add -->
+    <div id="insert">
+        <form action="/customers" method="POST" id="add_customer">
+            <legend><strong>Add Customer</strong></legend>
+            <fieldset class="fields">
+                <label> Name </label> <input type="text" name="customer_name" required>
+                <label> Phone Number </label> <input type="text" name="phone_number" required>
+            </fieldset>
+            <input class="btn" type="submit" name="add_customer" value="Add Customer">
+            <input class="btn" type="button" value="Cancel" onClick="browseCustomers()">
+        </form>
+    </div><!-- add -->
+
+    <p>&nbsp;</p>
+
+</body>
+
+</html>
