@@ -224,7 +224,7 @@ def order_dishes():
     # READ
     if request.method == "GET":
 
-        query = "SELECT order_id AS 'orderID', dish_id AS 'dishID' FROM Orders_has_Dishes;"
+        query = "SELECT orders_has_dishes_id AS ID, order_id AS 'orderID', dish_id AS 'dishID' FROM Orders_has_Dishes;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -249,7 +249,7 @@ def order_dishes():
 
 @app.route('/delete_order_dishes/<int:id>')
 def delete_order_dishes(id):
-    query = "DELETE FROM Orders_has_Dishes WHERE order_id = %s;"
+    query = "DELETE FROM Orders_has_Dishes WHERE orders_has_dishes_id = %s;"
     cursor = mysql.connection.cursor()
     cursor.execute(query, (id,))
     mysql.connection.commit()
@@ -263,7 +263,7 @@ def edit_order_dishes(id):
         order_id = request.form["order_id"]
         dish_id = request.form["dish_id"]
 
-        query = "UPDATE Orders_has_Dishes SET order_id = %s, dish_id = %s WHERE order_id = %s;"
+        query = "UPDATE Orders_has_Dishes SET order_id = %s, dish_id = %s WHERE orders_has_dishes_id = %s;"
         values = (order_id, dish_id, id)
         cursor = mysql.connection.cursor()
         cursor.execute(query, values)
@@ -272,7 +272,7 @@ def edit_order_dishes(id):
         return redirect("/order_dishes")
 
     if request.method == "GET":
-        query1 = "SELECT dish_id AS ID, order_id AS dishName, dish_id FROM Orders_has_Dishes WHERE dish_id = %s;" % (id)
+        query1 = "SELECT orders_has_dishes_id as ID, dish_id AS dishID, order_id AS orderID, dish_id FROM Orders_has_Dishes WHERE orders_has_dishes_id = %s;" % (id)
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
