@@ -401,7 +401,7 @@ def customers_has_dietary_restrictions():
     # READ
     if request.method == "GET":
 
-        query = "SELECT cr.customers_has_dietary_restrictions_id AS 'ID', cr.customer_id AS 'Customer ID', cr.restriction_id AS 'Dietary Restriction ID', r.description AS 'Description' FROM Customers_has_Dietary_Restrictions cr JOIN Dietary_Restrictions r ON cr.restriction_id = r.restriction_id;"
+        query = "SELECT cdr.customers_has_dietary_restrictions_id AS 'ID', cdr.customer_id AS 'Customer ID', cdr.restriction_id AS 'Dietary Restriction ID', dr.description AS 'Description' FROM Customers_has_Dietary_Restrictions cdr JOIN Dietary_Restrictions dr ON cdr.restriction_id = dr.restriction_id;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -426,7 +426,7 @@ def customers_has_dietary_restrictions():
 
 @app.route('/delete_customers_has_dietary_restrictions/<int:id>')
 def delete_customers_has_dietary_restrictions(id):
-    query = "DELETE FROM Customers_has_Dietary_Restrictions WHERE customer_id = %s;"
+    query = "DELETE FROM Customers_has_Dietary_Restrictions WHERE customers_has_dietary_restrictions_id = %s;"
     cursor = mysql.connection.cursor()
     cursor.execute(query, (id,))
     mysql.connection.commit()
@@ -440,6 +440,7 @@ def edit_customers_has_dietary_restrictions(id):
         customer_id = request.form["customer_id"]
         restriction_id = request.form["restriction_id"]
 
+        #probably have to include the "Description" attribute in Restrictions
         query = "UPDATE Customers_has_Dietary_Restrictions SET customer_id = %s, restriction_id = %s WHERE customers_has_dietary_restrictions_id = %s;"
         values = (customer_id, restriction_id, id)
         cursor = mysql.connection.cursor()
@@ -449,12 +450,11 @@ def edit_customers_has_dietary_restrictions(id):
         return redirect("/customers_has_dietary_restrictions")
 
     if request.method == "GET":
-        query1 = "SELECT customers_has_dietary_restrictions_id AS ID, customer_id AS customerID restriction_id AS restrictionID, FROM Customers_has_Dietary_Restrictions WHERE customers_has_dietary_restrictions_id = %s;" % (id)
+        query1 = "SELECT customers_has_dietary_restrictions_id AS ID, customer_id AS customerID, restriction_id AS restrictionID FROM Customers_has_Dietary_Restrictions WHERE customers_has_dietary_restrictions_id = %s;" % (id)
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
         return render_template("edit_customers_has_dietary_restrictions.j2", data = data)
-
 
 # Listener
 
