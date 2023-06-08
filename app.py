@@ -396,66 +396,7 @@ def edit_dietary_restrictions(id):
         data = cursor.fetchall()
         return render_template("edit_dietary_restrictions.j2", data = data)
 
-#customers_has_dietary_restrictions intersection
-@app.route('/order_dishes', methods = ["POST", "GET"])
-def order_dishes():
-    # READ
-    if request.method == "GET":
-
-        query = "SELECT order_id AS 'orderID', dish_id AS 'dishID' FROM Orders_has_Dishes;"
-        cursor = mysql.connection.cursor()
-        cursor.execute(query)
-        data = cursor.fetchall()
-
-        # render edit_order_dishes page passing query data to the edit_order_dishes template
-        return render_template("order_dishes.j2", data = data)
-
-    # ADD NEW
-    if request.method == "POST":
-        if request.form.get("add_order_dishes"):
-            order_id = request.form["order_id"]
-            dish_id = request.form["dish_id"]
-
-            query = "INSERT INTO Orders_has_Dishes (order_id, dish_id) VALUES (%s, %s);"
-            cursor = mysql.connection.cursor()
-            cursor.execute(query, (order_id, dish_id))
-            mysql.connection.commit()
-
-            return redirect("/order_dishes")
-
-
-
-@app.route('/delete_order_dishes/<int:id>')
-def delete_order_dishes(id):
-    query = "DELETE FROM Orders_has_Dishes WHERE order_id = %s;"
-    cursor = mysql.connection.cursor()
-    cursor.execute(query, (id,))
-    mysql.connection.commit()
-
-    return redirect("/order_dishes")
-
-@app.route('/edit_order_dishes/<int:id>', methods = ['GET', 'POST'])
-def edit_order_dishes(id):
-
-    if request.method == "POST":
-        order_id = request.form["order_id"]
-        dish_id = request.form["dish_id"]
-
-        query = "UPDATE Orders_has_Dishes SET order_id = %s, dish_id = %s WHERE order_id = %s;"
-        values = (order_id, dish_id, id)
-        cursor = mysql.connection.cursor()
-        cursor.execute(query, values)
-        mysql.connection.commit()
-
-        return redirect("/order_dishes")
-
-    if request.method == "GET":
-        query1 = "SELECT dish_id AS ID, order_id AS dishName, dish_id FROM Orders_has_Dishes WHERE dish_id = %s;" % (id)
-        cursor = mysql.connection.cursor()
-        cursor.execute(query1)
-        data = cursor.fetchall()
-        return render_template("edit_order_dishes.j2", data = data)
-
+#customer_dietary_restrictions
 
 # Listener
 

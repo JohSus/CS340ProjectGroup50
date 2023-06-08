@@ -34,7 +34,7 @@ CREATE OR REPLACE TABLE Customers_has_Dietary_Restrictions (
   customers_has_dietary_restrictions_id int NOT NULL AUTO_INCREMENT,
   customer_id int,
   restriction_id int,
-  PRIMARY KEY customers_has_dietary_restrictions_id,
+  PRIMARY KEY (customers_has_dietary_restrictions_id),
   FOREIGN KEY (customer_id) REFERENCES Customers(customer_id) 
   -- When either a dietary restriction or a customer is deleted, we want to delete this relationship
   ON DELETE CASCADE, 
@@ -83,7 +83,7 @@ CREATE OR REPLACE TABLE Orders_has_Dishes (
   orders_has_dishes_id int NOT NULL AUTO_INCREMENT,
   order_id int,
   dish_id int,
-  PRIMARY KEY orders_has_dishes_id,
+  PRIMARY KEY (orders_has_dishes_id),
   FOREIGN KEY (order_id) REFERENCES Orders(order_id)
   ON DELETE CASCADE,
   FOREIGN KEY (dish_id) REFERENCES Dishes(dish_id)
@@ -145,7 +145,7 @@ VALUES (1, 5, 1, 1),
 (3, 5, 3, 1),
 (4, 3, 4, 2);
 
-INSERT INTO Customers_has_Dietary_Restrictions (customers_has_dishes_id, customer_id, restriction_id)
+INSERT INTO Customers_has_Dietary_Restrictions (customers_has_dietary_restrictions_id, customer_id, restriction_id)
 VALUES (1, 1, 2),
 (2, 1, 3),
 (3, 2, 3),
@@ -158,3 +158,4 @@ VALUES (1, 'Vegetarian'),
 
 
 SET FOREIGN_KEY_CHECKS = 1;
+COMMIT;
