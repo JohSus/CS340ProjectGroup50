@@ -263,7 +263,7 @@ def edit_order_dishes(id):
         order_id = request.form["order_id"]
         dish_id = request.form["dish_id"]
 
-        query = "UPDATE Orders_has_Dishes SET order_id = %s, dish_id = %s WHERE order_id = %s;"
+        query = "UPDATE Orders_has_Dishes SET order_id = %s, dish_id = %s WHERE orders_has_dishes_id = %s;"
         values = (order_id, dish_id, id)
         cursor = mysql.connection.cursor()
         cursor.execute(query, values)
