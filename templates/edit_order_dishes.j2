@@ -7,7 +7,7 @@
 <body>
     <div id="edit_order_dishes">
         <form action="/edit_order_dishes/{{data[0].ID}}" method="POST" id="edit_order_dishes">
-            <legend><strong>Edit Customer</strong></legend>
+            <legend><strong>Edit Dishes in Order</strong></legend>
             <fieldset class="fields">order_dishes
                 <label id="orders_has_dishes_id"> ID: {{data[0].ID}} </label>
                 <label> Order ID:  </label>
@@ -15,7 +15,7 @@
                 <label> Dish ID: </label>
                 <input type="text" id="dish_id" name="dish_id" value="{{data[0].dishID}}" />
             </fieldset>
-            <input class="btn" type="submit" id="edit_order_dishes" name="edit_order_dishes" value="Edit Order-Dish relationship" />
+            <input class="btn" type="submit" id="edit_order_dishes" name="edit_order_dishes" value="Edit Dishes in Order" />
         </form>
     </div>
 </body>

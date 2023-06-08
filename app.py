@@ -44,7 +44,7 @@ def orders():
     # READ
     if request.method == "GET":
 
-        query = "SELECT order_id AS 'ID', time, customer_id AS 'customerID', dish_quantity AS 'dishQuantity' FROM Orders;"
+        query = "SELECT order_id AS 'ID', time AS 'Time', customer_id AS 'Customer ID', dish_quantity AS 'Dish Quantity' FROM Orders;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -164,7 +164,7 @@ def dishes():
     # READ
     if request.method == "GET":
 
-        query = "SELECT dish_id AS 'ID', dish_name AS 'dishName', price AS 'Price' FROM Dishes;"
+        query = "SELECT dish_id AS 'ID', dish_name AS 'Dish Name', price AS 'Price' FROM Dishes;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -224,7 +224,7 @@ def order_dishes():
     # READ
     if request.method == "GET":
 
-        query = "SELECT order_id AS 'orderID', dish_id AS 'dishID' FROM Orders_has_Dishes;"
+        query = "SELECT od.orders_has_dishes_id AS 'ID', od.order_id AS 'Order ID', od.dish_id AS 'Dish ID', d.dish_name AS 'Dish Name' FROM Orders_has_Dishes od JOIN Dishes d ON od.dish_id = d.dish_id;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -249,7 +249,7 @@ def order_dishes():
 
 @app.route('/delete_order_dishes/<int:id>')
 def delete_order_dishes(id):
-    query = "DELETE FROM Orders_has_Dishes WHERE order_id = %s;"
+    query = "DELETE FROM Orders_has_Dishes WHERE orders_has_dishes_id = %s;"
     cursor = mysql.connection.cursor()
     cursor.execute(query, (id,))
     mysql.connection.commit()
@@ -272,7 +272,7 @@ def edit_order_dishes(id):
         return redirect("/order_dishes")
 
     if request.method == "GET":
-        query1 = "SELECT order_id AS ID, dish_id AS dishName, dish_id FROM Orders_has_Dishes WHERE dish_id = %s;" % (id)
+        query1 = "SELECT orders_has_dishes_id AS ID, order_id AS orderID, dish_id AS dishID FROM Orders_has_Dishes WHERE orders_has_dishes_id = %s;" % (id)
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
@@ -283,8 +283,7 @@ def edit_order_dishes(id):
 def ratings():
     # READ
     if request.method == "GET":
-
-        query = "SELECT rating_id AS 'ID', rating, customer_id AS 'customerID', dish_id AS 'dishID' FROM Ratings;"
+        query = "SELECT r.rating_id AS 'ID', r.rating AS 'Rating', r.customer_id AS 'Customer ID', r.dish_id AS 'Dish ID', d.dish_name AS 'Dish Name' FROM Ratings r JOIN Dishes d ON r.dish_id = d.dish_id;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -402,7 +401,7 @@ def customers_has_dietary_restrictions():
     # READ
     if request.method == "GET":
 
-        query = "SELECT customer_id AS 'customerID', restriction_id AS 'restrictionID' FROM Customers_has_Dietary_Restrictions;"
+        query = "SELECT cr.customers_has_dietary_restrictions_id AS 'ID', cr.customer_id AS 'Customer ID', cr.restriction_id AS 'Dietary Restriction ID', r.description AS 'Description' FROM Customers_has_Dietary_Restrictions cr JOIN Dietary_Restrictions r ON cr.restriction_id = r.restriction_id;"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -441,7 +440,7 @@ def edit_customers_has_dietary_restrictions(id):
         customer_id = request.form["customer_id"]
         restriction_id = request.form["restriction_id"]
 
-        query = "UPDATE Customers_has_Dietary_Restrictions SET customer_id = %s, restriction_id = %s WHERE customer_id = %s;"
+        query = "UPDATE Customers_has_Dietary_Restrictions SET customer_id = %s, restriction_id = %s WHERE customers_has_dietary_restrictions_id = %s;"
         values = (customer_id, restriction_id, id)
         cursor = mysql.connection.cursor()
         cursor.execute(query, values)
@@ -450,7 +449,7 @@ def edit_customers_has_dietary_restrictions(id):
         return redirect("/customers_has_dietary_restrictions")
 
     if request.method == "GET":
-        query1 = "SELECT customer_id AS ID, restriction_id AS restrictionName, restriction_id FROM Customers_has_Dietary_Restrictions WHERE restriction_id = %s;" % (id)
+        query1 = "SELECT customers_has_dietary_restrictions_id AS ID, customer_id AS customerID restriction_id AS restrictionID, FROM Customers_has_Dietary_Restrictions WHERE customers_has_dietary_restrictions_id = %s;" % (id)
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
