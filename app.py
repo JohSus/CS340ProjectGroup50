@@ -272,7 +272,7 @@ def edit_order_dishes(id):
         return redirect("/order_dishes")
 
     if request.method == "GET":
-        query1 = "SELECT dish_id AS ID, order_id AS dishName, dish_id FROM Orders_has_Dishes WHERE dish_id = %s;" % (id)
+        query1 = "SELECT order_id AS ID, dish_id AS dishName, dish_id FROM Orders_has_Dishes WHERE dish_id = %s;" % (id)
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
@@ -396,7 +396,66 @@ def edit_dietary_restrictions(id):
         data = cursor.fetchall()
         return render_template("edit_dietary_restrictions.j2", data = data)
 
-#customer_dietary_restrictions
+# customer_dietary_restrictions interaction
+@app.route('/customers_has_dietary_restrictions', methods = ["POST", "GET"])
+def customers_has_dietary_restrictions():
+    # READ
+    if request.method == "GET":
+
+        query = "SELECT customer_id AS 'customerID', restriction_id AS 'restrictionID' FROM Customers_has_Dietary_Restrictions;"
+        cursor = mysql.connection.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        # render edit_customers_has_dietary_restrictions page passing query data to the edit_customers_has_dietary_restrictions template
+        return render_template("customers_has_dietary_restrictions.j2", data = data)
+
+    # ADD NEW
+    if request.method == "POST":
+        if request.form.get("add_customers_has_dietary_restrictions"):
+            customer_id = request.form["customer_id"]
+            restriction_id = request.form["restriction_id"]
+
+            query = "INSERT INTO Customers_has_Dietary_Restrictions (customer_id, restriction_id) VALUES (%s, %s);"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query, (customer_id, restriction_id))
+            mysql.connection.commit()
+
+            return redirect("/customers_has_dietary_restrictions")
+
+
+
+@app.route('/delete_customers_has_dietary_restrictions/<int:id>')
+def delete_customers_has_dietary_restrictions(id):
+    query = "DELETE FROM Customers_has_Dietary_Restrictions WHERE customer_id = %s;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query, (id,))
+    mysql.connection.commit()
+
+    return redirect("/customers_has_dietary_restrictions")
+
+@app.route('/edit_customers_has_dietary_restrictions/<int:id>', methods = ['GET', 'POST'])
+def edit_customers_has_dietary_restrictions(id):
+
+    if request.method == "POST":
+        customer_id = request.form["customer_id"]
+        restriction_id = request.form["restriction_id"]
+
+        query = "UPDATE Customers_has_Dietary_Restrictions SET customer_id = %s, restriction_id = %s WHERE customer_id = %s;"
+        values = (customer_id, restriction_id, id)
+        cursor = mysql.connection.cursor()
+        cursor.execute(query, values)
+        mysql.connection.commit()
+
+        return redirect("/customers_has_dietary_restrictions")
+
+    if request.method == "GET":
+        query1 = "SELECT customer_id AS ID, restriction_id AS restrictionName, restriction_id FROM Customers_has_Dietary_Restrictions WHERE restriction_id = %s;" % (id)
+        cursor = mysql.connection.cursor()
+        cursor.execute(query1)
+        data = cursor.fetchall()
+        return render_template("edit_customers_has_dietary_restrictions.j2", data = data)
+
 
 # Listener
 

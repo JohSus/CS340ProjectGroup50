@@ -1,0 +1,71 @@
+</html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Customers' Dietary Restrictions</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript"> </script>
+</head>
+
+<body>
+    <h1>Customers' Dietary Restrictions</h1>
+
+    [ <a href="/">Home</a> | <a href="/orders">Orders</a> | <a href="/customers">Customers</a> | <a
+        href="/dishes">Dishes</a> |
+    <a href="/order_dishes">Order has Dishes</a> | <a href="/ratings">Ratings</a> |
+    <a href="/dietary_restrictions">Dietary Restrictions</a> | <a
+        href="/customers_has_dietary_restrictions">Customer Dietary Restrictions</a> ]
+
+    <div>
+        <table border="1" cellpadding="5">
+            <table>
+                <thead>
+                    <tr>
+                        <!-- Iterate through each key in the first entry to get the
+        column name -->
+                        {% for key in data[0].keys() %}
+
+                        <!-- Create a <th> tag with the key inside of it, this will be
+        our header row -->
+                        <th>{{ key }}</th>
+
+                        <!-- End of this for loop -->
+                        {% endfor %}
+                    </tr>
+                <tbody>
+
+                    <!-- Now, iterate through every person in bsg_people -->
+                    {% for customer_restriction in data %}
+                    <tr>
+                        <!-- Then iterate through every key in the current person dictionary -->
+                        {% for key in customer_restriction.keys() %}
+
+                        <!-- Create a <td> element with the value of that key in it -->
+                        <td>{{customer_restriction[key]}}</td>
+                        {% endfor %}
+                        <td><a href="/edit_customers_has_dietary_restrictions/{{customer_restriction.ID}}">Edit</a></td>
+                        <td><a href="/delete_customers_has_dietary_restrictions/{{customer_restriction.ID}}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+            </table>
+        </table>
+        <p>&nbsp;</p>
+
+    </div> <!-- add -->
+    <div id="insert">
+        <form action="/customers_has_dietary_restrictions" method="POST" id="add_customers_has_dietary_restrictions">
+            <legend><strong>Add Customer Dietary Restriction</strong></legend>
+            <fieldset class="fields">
+                <label> Customer ID </label> <input type="text" name="customer_id" required>
+                <label> Dietary Restriction ID </label> <input type="text" name="restriction_id" required>
+            </fieldset>
+            <input class="btn" type="submit" name="add_customers_has_dietary_restrictions" value="Add Customer Restriction">
+        </form>
+    </div><!-- add -->
+
+    <p>&nbsp;</p>
+
+</body>
+
+</html>
