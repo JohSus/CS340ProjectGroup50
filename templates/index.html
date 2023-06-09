@@ -8,16 +8,84 @@
     <body>
         <h1>Home</h1>
 
-            [ <a href="/">Home</a> | 
-            <a href="/orders">Orders</a> | 
-            <a href="/customers">Customers</a> | 
-            <a href="/dishes">Dishes</a> | 
-            <a href="/order_dishes">Order has Dishes</a> | 
-            <a href="/ratings">Ratings</a> | 
-            <a href="/dietary_restrictions">Dietary Restrictions</a> | 
-            <a href="/customers_has_dietary_restrictions">Customer Dietary Restrictions</a> ]
+        [ <a href="/">Home</a> | 
+        <a href="/orders">Orders</a> | 
+        <a href="/customers">Customers</a> | 
+        <a href="/dishes">Dishes</a> | 
+        <a href="/order_dishes">Order has Dishes</a> | 
+        <a href="/ratings">Ratings</a> | 
+        <a href="/dietary_restrictions">Dietary Restrictions</a> | 
+        <a href="/customers_has_dietary_restrictions">Customer Dietary Restrictions</a> ]
 
-            <p> Busy Beaver Burgers </p>
+        <h1>Busy Beaver Burgers</h1>
+
+        <h2>
+            <a href="/orders">Orders</a>
+        </h2>
+         <p>
+            Orders are made by customers, and they are typically transactions, 
+            meaning they are recorded and generally not changed. When recorded, 
+            they contain the date and time of the transaction, the customer that 
+            ordered the food, the quantity of each dish ordered, and the cumulative 
+            price of the food (not shown, because it is a calculation of individual 
+            food items).
+        </p>
+
+        <h2>
+            <a href="/customers">Customers</a>
+        </h2>
+        <p>
+            The customers that order food or will prospectively order food from 
+            Busy Beaver Burgers. We want to record customer details to provide a more 
+            customized experience (especially with regards to allergies). Additionally, 
+            we want to keep track of customers who leave poor reviews to follow up 
+            with them afterwards.
+        </p>
+
+        <h2>
+            <a href="/dishes">Dishes</a>
+        </h2>
+        <p>
+            These are the dishes on the menu, of which there are currently 7. Each dish 
+            has a name, price, order quantity (the number of the same dish that is ordered 
+            in one order). Each dish also can be associated with one or more 
+            dietary restrictions.
+        </p>
+
+        <h2>
+            <a href="/order_dishes">Orders has Dishes</a>
+        </h2>
+        <p>
+            This is intersection page for <strong>Orders</strong> and <strong>Dishes</strong>.
+            A specific order can have multiple dishes and each dish in an order has its own
+            record.
+        </p>
+
+        <h2>
+            <a href="/ratings">Ratings</a>
+        </h2>
+        <p>
+            Ratings are between 1 and 5, and they give the restaurant an idea of which dishes 
+            are popular at the moment.
+        </p>
+
+        <h2>
+            <a href="/dietary_restrictions">Dietary Restrictions</a>
+        </h2>
+        <p>
+            The dietary restrictions table is a category table that lists categories such as “vegan”, 
+            “gluten-free”, etc., and it describes foods on the menu, as well as customers 
+            should they choose to list their dietary preferences. 
+        </p>
+
+        <h2>
+            <a href="/customers_has_dietary_restrictions">Customer Dietary Restrictions</a>
+        </h2>
+        <p>
+            This is the intersection page for <strong>Customers</strong> and <strong>Dietary
+            Restrictions</strong>. A customer can have multiple dietary restrictions, each of which 
+            are in seperate records.
+        </p>
 
     </body>
 </html>
