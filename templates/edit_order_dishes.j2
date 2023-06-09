@@ -11,9 +11,23 @@
             <fieldset class="fields">
                 <label id="orders_has_dishes_id"> ID: {{data[0].ID}} </label>
                 <label> Order ID:  </label>
+                
+                <select id="update_order_id" name="order_id">
+                    <option value="0"> </option>
+                    {% for order in data %}
+                    <option value="{{order['order_id']}}">{{order['order_id']}}</option>
+                    {% endfor %}
+                </select>
+                {% comment %}
                 <input type="text" id="order_id" name="order_id" value="{{data[0].orderID}}" />
+                {% endcomment %}
+
                 <label> Dish ID: </label>
+
+                {% comment %}
                 <input type="text" id="dish_id" name="dish_id" value="{{data[0].dishID}}" />
+                {% endcomment %}
+
             </fieldset>
             <input class="btn" type="submit" id="edit_order_dishes" name="edit_order_dishes" value="Edit Dishes in Orders" />
         </form>
