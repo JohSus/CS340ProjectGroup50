@@ -1,0 +1,339 @@
+/*  ===== MOBILE styles (reside at the top and are inherited by all devices) ===== */
+/*  ===== See tablet, desktop, and print @media queries at the bottom. */
+
+
+/*   ----- Imports  -----  */
+/* Add fonts from the app's server 
+    @font-face {                
+      font-family: 'FontName';
+      src: url('FontName.woff2') format('woff2');
+    } 
+    ...or hosted services like Google Fonts 
+    @import url(//fonts.googleapis.com/css?family=Font+Name);
+  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+
+
+/* @import 'node_modules/modern-normalize/modern-normalize.css'; */
+/* npm install modern-normalize
+          Resets elements for browser consistency.  
+          https://www.npmjs.com/package/modern-normalize
+        */
+
+/* Component-specific stylesheets, if any. 
+    @import "component1.css";   
+  */
+
+/*   ----- Variables  -----  */
+:root {
+}
+
+/*  ----- Viewport ----- elements inherited by all remaining elements ----- */
+body {
+  /* Can alternatively define in html {} or :root {} */
+  font-family: 'Roboto', sans-serf;
+  /* Define with at least one font name and its related generic family name.*/
+  margin: 1%;
+  padding: 1%;
+  max-width: 1500px;
+}
+
+
+/*  ----- Page layout blocks -----  */
+header {
+}
+
+main {}
+
+section {}
+
+article p a {
+  text-decoration: none;
+}
+
+#topic1 {}
+
+#topic2 {}
+
+div {}
+
+aside {}
+
+footer {
+}
+
+/* ----- Anchors ----- Text links */
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:link {}
+
+a:active {}
+
+a:visited {
+  text-decoration: none;
+  color: darkmagenta;
+}
+
+a:hover {
+  color: blue
+}
+
+/*  ----- Navigation ----- Override text links for navigation only.  */
+
+nav {
+  height: auto;
+}
+
+nav a {
+  margin: 12px 12px;
+  padding: 6px 6px;
+  max-width: 1000px;
+  font-size: 18px;
+  text-decoration: none;
+  line-height: 50px;
+}
+
+
+
+/*  -----  Typography  ----- */
+p {}
+
+br {}
+
+ol,
+ul,
+dl {}
+
+li {}
+
+dt {}
+
+dd {}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+}
+
+h3 {
+}
+
+h4 {}
+
+h5 {}
+
+h6 {}
+
+abbr {}
+
+acronym {}
+
+address {}
+
+blockquote {}
+
+q {}
+
+cite {}
+
+em {}
+
+hr {}
+
+mark {}
+
+s {}
+
+span {}
+
+strong {}
+
+sub {}
+
+sup {}
+
+time {}
+
+/*  ----- Coding or instructional typography ----- */
+pre {}
+
+code {}
+
+kbd {}
+
+samp {}
+
+var {}
+
+del {}
+
+ins {}
+
+/*  ----- Table ----- */
+table {
+  margin: 5px;
+}
+
+caption {
+}
+
+thead {
+}
+
+tbody {
+
+}
+
+tfoot {}
+
+tr {
+  background-color: whitesmoke;
+}
+
+tr:nth-child(odd) td {
+  background-color: lightgray;
+}
+
+tr th {
+  padding: 10px 2%;
+  margin: 0 10px;
+}
+
+tr td {
+  padding: 4px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+
+colgroup {}
+
+data {}
+
+datalist {}
+
+
+/*  ----- Form ----- */
+form {}
+
+button {
+}
+
+fieldset {
+  border-radius: 3px;
+}
+
+legend {
+  font-size: 24px;
+}
+
+
+label {
+}
+
+
+input[type=text] {
+  margin-right: 26px;
+}
+
+:focus{
+  border-color: blue;
+}
+
+*:required {
+}
+
+*:required:after {
+  content:" *";
+}
+
+output {}
+
+meter {}
+
+progress {}
+
+select {
+  margin-right: 26px;
+}
+
+optgroup {}
+
+option {
+}
+
+textarea {
+  
+}
+
+::placeholder {
+}
+
+.arrows {
+}
+.arrows:hover {
+}
+
+
+
+/*  ----- Classes for alignment, positioning, widths, grids, embellishments, and animation -----  */
+.gallery {}
+
+.floatright {}
+
+.floatleft {}
+
+.center-middle {}
+
+.ten {}
+
+.twenty {}
+
+.thirty {}
+
+.forty {}
+
+.fifty {}
+
+.sixty {}
+
+.seventy {}
+
+.eighty {}
+
+.radius {}
+
+.circle {}
+
+.boxshadow {}
+
+.tshadow {}
+
+.gradient {}
+
+.shape {}
+
+@keyframes App-logo {}
+
+/*   ===== TABLET  media query overrides mobile styles ===== */
+@media all and (min-width: 600px) {}
+
+/*   ===== DESKTOP  media query overrides mobile and tablet styles ===== */
+@media all and (min-width: 1080px) {}
+  .gallery {}
+/*   ===== PRINT  media query overrides previous styles =====  */
+@media print {}
+
+
