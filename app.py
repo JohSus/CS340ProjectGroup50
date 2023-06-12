@@ -273,10 +273,16 @@ def edit_order_dishes(id):
 
     if request.method == "GET":
         query1 = "SELECT orders_has_dishes_id AS ID, order_id AS orderID, dish_id AS dishID FROM Orders_has_Dishes WHERE orders_has_dishes_id = %s;" % (id)
+        query2 = "SELECT order_id AS orderID FROM Orders;"
+        query3 = "SELECT dish_id AS dishID from Dishes"
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
-        return render_template("edit_order_dishes.j2", data = data)
+        cursor.execute(query2)
+        data2 = cursor.fetchall()
+        cursor.execute(query3)
+        data3 = cursor.fetchall()
+        return render_template("edit_order_dishes.j2", data = data, data2 = data2, data3 = data3)
 
 # ratings
 @app.route('/ratings', methods = ["POST", "GET"])
