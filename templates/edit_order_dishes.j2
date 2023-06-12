@@ -13,20 +13,20 @@
                 <label> Order ID:  </label>
                 
                 <select id="update_order_id" name="order_id">
-                    <option value="0"> </option>
-                    {% for order in data %}
-                    <option value="{{order['order_id']}}">{{order['order_id']}}</option>
+                    <option value="0"> None </option>
+                    {% for order in data2 %}
+                    <option value="{{order.orderID}}">{{order.orderID}}</option>
                     {% endfor %}
                 </select>
-                {% comment %}
-                <input type="text" id="order_id" name="order_id" value="{{data[0].orderID}}" />
-                {% endcomment %}
 
                 <label> Dish ID: </label>
 
-                {% comment %}
-                <input type="text" id="dish_id" name="dish_id" value="{{data[0].dishID}}" />
-                {% endcomment %}
+                <select id="update_dish_id" name="dish_id">
+                    <option value="0"> None </option>
+                    {% for dish in data3 %}
+                    <option value="{{dish.dishID}}">{{dish.dishID}}</option>
+                    {% endfor %}
+                </select>
 
             </fieldset>
             <input class="btn" type="submit" id="edit_order_dishes" name="edit_order_dishes" value="Edit Dishes in Orders" />
