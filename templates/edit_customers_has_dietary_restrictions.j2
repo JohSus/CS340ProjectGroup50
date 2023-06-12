@@ -11,9 +11,23 @@
             <fieldset class="fields">
                 <label id="customers_has_dietary_restrictions_id"> ID: {{data[0].ID}} </label>
                 <label> Customer ID:  </label>
-                <input type="text" id="customer_id" name="customer_id" value="{{data[0].customerID}}" />
+                
+                <select id="update_customer_id" name="customer_id">
+                    <option value="0"> None </option>
+                    {% for customer in data2 %}
+                    <option value="{{customer.customerID}}">{{customer.customerID}}</option>
+                    {% endfor %}
+                </select>
+
                 <label> Dietary Restriction ID: </label>
-                <input type="text" id="restriction_id" name="restriction_id" value="{{data[0].restrictionID}}" />
+                
+                <select id="update_restriction_id" name="restriction_id">
+                    <option value="0"> None </option>
+                    {% for restriction in data3 %}
+                    <option value="{{restriction.restrictionID}}">{{restriction.restrictionID}}</option>
+                    {% endfor %}
+                </select>
+
             </fieldset>
             <input class="btn" type="submit" id="edit_customers_has_dietary_restrictions" name="edit_customers_has_dietary_restrictions" value="Edit Customer/Dietary Restriction relationship" />
         </form>

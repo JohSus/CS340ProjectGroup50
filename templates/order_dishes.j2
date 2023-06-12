@@ -57,8 +57,21 @@
         <form action="/order_dishes" method="POST" id="add_order_dishes">
             <legend><strong>Add Order has Dishes</strong></legend>
             <fieldset class="fields">
-                <label> Order ID </label> <input type="text" name="order_id" required>
-                <label> Dish ID </label> <input type="text" name="dish_id" required>
+                <label> Order ID </label>
+                <select id="update_order_id" name="order_id">
+                    <option value="0"> None </option>
+                    {% for order in data2 %}
+                    <option value="{{order.orderID}}">{{order.orderID}}</option>
+                    {% endfor %}
+                </select>
+                
+                <label> Dish ID </label>
+                <select id="update_dish_id" name="dish_id">
+                    <option value="0"> None </option>
+                    {% for dish in data3 %}
+                    <option value="{{dish.dishID}}">{{dish.dishID}}</option>
+                    {% endfor %}
+                </select>
             </fieldset>
             <input class="btn" type="submit" name="add_order_dishes" value="Add Order has Dishes">
         </form>

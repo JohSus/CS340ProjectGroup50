@@ -57,8 +57,20 @@
         <form action="/customers_has_dietary_restrictions" method="POST" id="add_customers_has_dietary_restrictions">
             <legend><strong>Add Customer Dietary Restriction</strong></legend>
             <fieldset class="fields">
-                <label> Customer ID </label> <input type="text" name="customer_id" required>
-                <label> Dietary Restriction ID </label> <input type="text" name="restriction_id" required>
+                <label> Customer ID </label>
+                <select id="update_customer_id" name="customer_id">
+                    <option value="0"> None </option>
+                    {% for customer in data2 %}
+                    <option value="{{customer.customerID}}">{{customer.customerID}}</option>
+                    {% endfor %}
+                </select>
+                <label> Dietary Restriction ID </label>
+                <select id="update_restriction_id" name="restriction_id">
+                    <option value="0"> None </option>
+                    {% for restriction in data3 %}
+                    <option value="{{restriction.restrictionID}}">{{restriction.restrictionID}}</option>
+                    {% endfor %}
+                </select>
             </fieldset>
             <input class="btn" type="submit" name="add_customers_has_dietary_restrictions" value="Add Customer Restriction">
         </form>

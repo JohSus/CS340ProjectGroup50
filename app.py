@@ -225,12 +225,18 @@ def order_dishes():
     if request.method == "GET":
 
         query = "SELECT od.orders_has_dishes_id AS 'ID', od.order_id AS 'Order ID', od.dish_id AS 'Dish ID', d.dish_name AS 'Dish Name' FROM Orders_has_Dishes od JOIN Dishes d ON od.dish_id = d.dish_id;"
+        query2 = "SELECT order_id AS orderID FROM Orders;"
+        query3 = "SELECT dish_id AS dishID from Dishes"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
+        cursor.execute(query2)
+        data2 = cursor.fetchall()
+        cursor.execute(query3)
+        data3 = cursor.fetchall()
 
         # render edit_order_dishes page passing query data to the edit_order_dishes template
-        return render_template("order_dishes.j2", data = data)
+        return render_template("order_dishes.j2", data = data, data2 = data2, data3 = data3)
 
     # ADD NEW
     if request.method == "POST":
@@ -408,12 +414,19 @@ def customers_has_dietary_restrictions():
     if request.method == "GET":
 
         query = "SELECT cdr.customers_has_dietary_restrictions_id AS 'ID', cdr.customer_id AS 'Customer ID', cdr.restriction_id AS 'Dietary Restriction ID', dr.description AS 'Description' FROM Customers_has_Dietary_Restrictions cdr JOIN Dietary_Restrictions dr ON cdr.restriction_id = dr.restriction_id;"
+        query2 = "SELECT customer_id AS customerID FROM Customers;"
+        query3 = "SELECT restriction_id AS restrictionID from Dietary_Restrictions"
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
+        cursor.execute(query2)
+        data2 = cursor.fetchall()
+        cursor.execute(query3)
+        data3 = cursor.fetchall()
+        cursor = mysql.connection.cursor()
 
         # render edit_customers_has_dietary_restrictions page passing query data to the edit_customers_has_dietary_restrictions template
-        return render_template("customers_has_dietary_restrictions.j2", data = data)
+        return render_template("customers_has_dietary_restrictions.j2", data = data, data2 = data2, data3 = data3)
 
     # ADD NEW
     if request.method == "POST":
@@ -422,11 +435,10 @@ def customers_has_dietary_restrictions():
             restriction_id = request.form["restriction_id"]
 
             query = "INSERT INTO Customers_has_Dietary_Restrictions (customer_id, restriction_id) VALUES (%s, %s);"
-            cursor = mysql.connection.cursor()
             cursor.execute(query, (customer_id, restriction_id))
             mysql.connection.commit()
 
-            return redirect("/customers_has_dietary_restrictions")
+            return render_template("customers_has_dietary_restrictions.j2", data2 = data2, data3 = data3)
 
 
 
@@ -446,7 +458,6 @@ def edit_customers_has_dietary_restrictions(id):
         customer_id = request.form["customer_id"]
         restriction_id = request.form["restriction_id"]
 
-        #probably have to include the "Description" attribute in Restrictions
         query = "UPDATE Customers_has_Dietary_Restrictions SET customer_id = %s, restriction_id = %s WHERE customers_has_dietary_restrictions_id = %s;"
         values = (customer_id, restriction_id, id)
         cursor = mysql.connection.cursor()
@@ -457,15 +468,21 @@ def edit_customers_has_dietary_restrictions(id):
 
     if request.method == "GET":
         query1 = "SELECT customers_has_dietary_restrictions_id AS ID, customer_id AS customerID, restriction_id AS restrictionID FROM Customers_has_Dietary_Restrictions WHERE customers_has_dietary_restrictions_id = %s;" % (id)
+        query2 = "SELECT customer_id AS customerID FROM Customers;"
+        query3 = "SELECT restriction_id AS restrictionID from Dietary_Restrictions"
         cursor = mysql.connection.cursor()
         cursor.execute(query1)
         data = cursor.fetchall()
-        return render_template("edit_customers_has_dietary_restrictions.j2", data = data)
+        cursor.execute(query2)
+        data2 = cursor.fetchall()
+        cursor.execute(query3)
+        data3 = cursor.fetchall()
+        return render_template("edit_customers_has_dietary_restrictions.j2", data = data, data2 = data2, data3 = data3)
 
 # Listener
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9544)) 
+    port = int(os.environ.get('PORT', 9546)) 
     #                                 ^^^^
     #              You can replace this number with any valid port
     
