@@ -186,6 +186,10 @@ table {
   margin: 5px;
 }
 
+table a {
+  text-decoration: underline;
+}
+
 caption {
 }
 
